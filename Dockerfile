@@ -6,9 +6,14 @@ RUN yum install -y nodejs
 
 RUN mkdir /app
 COPY . /app
-WORKDIR /app
 
-RUN npm install --only=prod
+WORKDIR /app/client
+RUN npm install
+
+WORKDIR /app/server
+RUN npm install
+
+WORKDIR /app
 RUN npm run build
 
 ENV NODE_ENV production
