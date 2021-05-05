@@ -44,7 +44,7 @@ jobs:
       run: |
         cd client
         npm ci
-        cd ..\server
+        cd ../server
         npm ci
     
     - name: Run unit tests
