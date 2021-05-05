@@ -8,10 +8,10 @@ RUN mkdir /app
 COPY . /app
 
 WORKDIR /app/client
-RUN npm install
+RUN npm ci
 
 WORKDIR /app/server
-RUN npm install
+RUN npm ci
 
 WORKDIR /app
 RUN npm run build
