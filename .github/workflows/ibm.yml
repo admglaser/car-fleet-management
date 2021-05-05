@@ -43,10 +43,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
-    - name: Run unit tests
+    - name: Install packages
       run: |
-        npm install
-        npm test
+        cd client
+        npm ci
+        cd ..\server
+        npm ci
+    
+    - name: Run unit tests
+      run: npm test
 
     # Download and Install IBM Cloud CLI
     - name: Install IBM Cloud CLI
