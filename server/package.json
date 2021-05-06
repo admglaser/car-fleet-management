@@ -9,7 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "@cloudant/cloudant": "^4.3.1",
+    "dotenv": "^9.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0"
   },
   "devDependencies": {
     "jest": "^26.6.3"
