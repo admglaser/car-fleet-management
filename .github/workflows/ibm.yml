@@ -23,7 +23,10 @@ env:
   IMAGE_NAME: car-fleet-management
   IKS_CLUSTER: c297fpcd09h01ququ78g
   DEPLOYMENT_NAME: car-fleet-management
-  PORT: 3000
+  SERVER_PORT: 3000
+  CLOUDANT_URL: ${{ secrets.CLOUDANT_URL }}
+  FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+  FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
 
 jobs:
   setup-test-build-publish-deploy:
