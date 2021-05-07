@@ -49,7 +49,9 @@ function Facebook({ app, userDao }) {
       }
       const admin = userInDb ? userInDb.admin : false;
       const token = generateToken({ userId: user.id, admin });
-      res.cookie("auth", token);
+      const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      res.cookie("auth", token, { expires });
+      res.cookie("name", user.firstName, { expires });
       res.redirect("/");
     }
   );
