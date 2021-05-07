@@ -1,31 +1,25 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-primary">
+    <b-navbar toggleable="lg" type="dark" variant="primary">
       <div class="container">
-        <router-link class="navbar-brand" to="/">
-          <img class="logo" src="@/assets/logo.svg">
-        </router-link>
-        <h6>Car Fleet Management</h6>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="user-pic" src="@/assets/user-circle.svg">
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="#">{{ name }}</a>
-                </li>
-                <div class="dropdown-divider"></div>
-                <li>
-                  <a class="dropdown-item" href="#" @click="logout">Logout</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+        <b-navbar-brand>
+          <router-link to="/">
+            <img class="logo" src="@/assets/logo.svg">
+            <span class="title">Car Fleet Management</span>
+          </router-link>
+        </b-navbar-brand>
+       
+
+        <b-dropdown variant="link" right text="Right align" no-caret>
+          <template #button-content>
+            <img class="user-pic" src="@/assets/user-circle.svg">
+          </template>
+          <b-dropdown-item>{{ name }}</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item href="#" @click="logout">Logout</b-dropdown-item>
+        </b-dropdown>
+
       </div>
-    </nav>
+   </b-navbar>
 </template>
 
 <script>
@@ -53,17 +47,16 @@ function deleteCookie(name) {
 <style lang="scss" scoped>
 .logo {
   width: 23px;
+  margin-right: 1rem;
 }
 .navbar {
   height: 50px;
+}
+.title {
   color: white;
-  .container {
-    justify-content: flex-start;
-    align-items: baseline;
-  }
+  font-size: 1rem;
 }
 .user-pic {
   width: 24px;
-  margin-right: 1em;
 }
 </style>

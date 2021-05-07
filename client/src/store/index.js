@@ -7,6 +7,7 @@ export function Store() {
   const state = {
     token: null,
     name: null,
+    cars: [],
   };
   const mutations = {
     setToken: (state, value) => {
@@ -14,6 +15,9 @@ export function Store() {
     },
     setName: (state, value) => {
       state.name = value;
+    },
+    setCars: (state, value) => {
+      state.cars = value;
     },
   };
 
