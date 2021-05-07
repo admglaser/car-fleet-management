@@ -16,6 +16,7 @@ on:
 # Environment variables available to all jobs and steps in this workflow
 env:
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  CF_DOCKER_PASSWORD: ${{ secrets.IBM_CLOUD_API_KEY }}
   IBM_CLOUD_REGION: us-south
   ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
   REGISTRY_HOSTNAME: us.icr.io
@@ -86,5 +87,6 @@ jobs:
       # Deploy the Docker image to IBM Cloud Foundry
       - name: Deploy to Foundry
         run: |
+          ibmcloud cf install
           ibmcloud target --cf 
-          CF_DOCKER_PASSWORD=$IBM_CLOUD_API_KEY ibmcloud cf push car-fleet-management
+          ibmcloud cf push car-fleet-management
