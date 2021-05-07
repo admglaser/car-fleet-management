@@ -72,8 +72,11 @@ jobs:
       - name: Build with Docker
         run: |
           docker build -t "$REGISTRY_HOSTNAME"/"$ICR_NAMESPACE"/"$IMAGE_NAME":"$GITHUB_SHA" \
-            --build-arg GITHUB_SHA="$GITHUB_SHA" \
-            --build-arg GITHUB_REF="$GITHUB_REF" .
+            --build-arg SERVER_PORT=$SERVER_PORT \
+            --build-arg CLOUDANT_URL=$CLOUDANT_URL \
+            --build-arg IBM_CLOUD_API_KEY=$IBM_CLOUD_API_KEY \
+            --build-arg FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID \
+            --build-arg FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET .
 
       # Push the image to IBM Container Registry
       - name: Push the image to ICR
