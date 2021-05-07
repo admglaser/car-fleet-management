@@ -1,4 +1,5 @@
 module.exports = {
+  appUrl: process.env.APP_URL,
   serverPort: process.env.SERVER_PORT || 3000,
   cloudantUrl: process.env.CLOUDANT_URL,
   ibmCloudApiKey: process.env.IBM_CLOUD_API_KEY,

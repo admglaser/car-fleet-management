@@ -1,0 +1,6 @@
+applications:
+  - name: car-fleet-management
+    memory: 256M
+    docker:
+      image: us.icr.io/admglaser/car-fleet-management:latest
+      username: iamapikey

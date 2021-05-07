@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const { generateToken } = require("../util/jwt");
-const { facebookClientId, facebookClientSecret } = require("../config");
+const { appUrl, facebookClientId, facebookClientSecret } = require("../config");
 
 function Facebook({ app, userDao }) {
   passport.serializeUser(function (user, done) {
@@ -16,7 +16,7 @@ function Facebook({ app, userDao }) {
       {
         clientID: facebookClientId,
         clientSecret: facebookClientSecret,
-        callbackURL: "/auth/facebook/callback",
+        callbackURL: appUrl + "/auth/facebook/callback",
         profileFields: ["email", "name"],
       },
       function (_accessToken, _refreshToken, profile, done) {
