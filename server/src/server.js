@@ -14,7 +14,7 @@ async function run() {
   const userDao = await UserDao({ cloudant });
   const app = App({ userDao });
   app.listen(serverPort, () =>
-    console.log(`2Server running at http://localhost:${serverPort}`)
+    console.log(`Server running at http://localhost:${serverPort}`)
   );
 }
 

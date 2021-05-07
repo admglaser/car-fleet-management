@@ -25,8 +25,6 @@ function Facebook({ app, userDao }) {
     )
   );
 
-  console.error("callbackURL", passport._strategies.facebook._callbackURL);
-
   const router = express.Router();
   router.use(passport.initialize());
   router.get(
