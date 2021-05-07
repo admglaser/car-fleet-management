@@ -73,6 +73,7 @@ jobs:
       - name: Build with Docker
         run: |
           docker build -t "$REGISTRY_HOSTNAME"/"$ICR_NAMESPACE"/"$IMAGE_NAME":latest \
+            --build-arg APP_URL=$APP_URL \
             --build-arg SERVER_PORT=$SERVER_PORT \
             --build-arg CLOUDANT_URL=$CLOUDANT_URL \
             --build-arg IBM_CLOUD_API_KEY=$IBM_CLOUD_API_KEY \
