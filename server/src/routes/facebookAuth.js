@@ -25,6 +25,8 @@ function Facebook({ app, userDao }) {
     )
   );
 
+  console.error("callbackURL", passport._strategies.facebook._callbackURL);
+
   const router = express.Router();
   router.use(passport.initialize());
   router.get(
@@ -37,7 +39,6 @@ function Facebook({ app, userDao }) {
       session: false,
     }),
     async (req, res) => {
-      console.error("callbackURL", passport._strategies.facebook._callbackURL);
       const user = {
         id: req.user._json.id,
         email: req.user._json.email,
