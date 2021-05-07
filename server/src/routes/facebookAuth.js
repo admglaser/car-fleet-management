@@ -16,7 +16,7 @@ function Facebook({ app, userDao }) {
       {
         clientID: facebookClientId,
         clientSecret: facebookClientSecret,
-        callbackURL: appUrl + "/auth/facebook/callback",
+        callbackURL: appUrl + "/auth/facebook/callback/",
         profileFields: ["email", "name"],
       },
       function (_accessToken, _refreshToken, profile, done) {
