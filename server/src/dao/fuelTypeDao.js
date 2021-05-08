@@ -1,15 +1,15 @@
-const TABLE_NAME = "car-types";
+const TABLE_NAME = "fuel-types";
 
-async function CarTypeDao({ cloudant }) {
+async function FuelTypeDao({ cloudant }) {
   try {
     await cloudant.db.create(TABLE_NAME);
   } catch (err) {}
 
-  async function addCarType({ name }) {
+  async function addFuelType({ name }) {
     await cloudant.use(TABLE_NAME).insert({ _id: name });
   }
 
-  async function getCarTypes() {
+  async function getFuelTypes() {
     const { rows } = await cloudant
       .use(TABLE_NAME)
       .list({ include_docs: true });
@@ -19,9 +19,9 @@ async function CarTypeDao({ cloudant }) {
   }
 
   return {
-    addCarType,
-    getCarTypes,
+    addFuelType,
+    getFuelTypes,
   };
 }
 
-module.exports = CarTypeDao;
+module.exports = FuelTypeDao;
