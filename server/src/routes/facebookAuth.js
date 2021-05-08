@@ -52,6 +52,7 @@ function Facebook({ app, userDao }) {
       const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
       res.cookie("auth", token, { expires });
       res.cookie("name", user.firstName, { expires });
+      res.cookie("admin", admin, { expires });
       res.redirect("/");
     }
   );
