@@ -15,7 +15,7 @@ Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
 // https://github.com/jaredhanson/passport-facebook#why-is-__-appended-to-the-redirect-uri
-if (window.location.hash && window.location.hash == "#/_=_") {
+if (window.location.hash && window.location.hash == "#_=_") {
   window.location.hash = "";
 }
 
