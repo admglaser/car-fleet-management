@@ -2,8 +2,8 @@
   <div>
     <NavBar/>
     <div class="container">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
-      <table class="table table-sm table-striped">
+      <button v-if="admin" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
+      <table v-if="admin" class="table table-sm table-striped">
         <thead>
           <tr>
             <th>License number</th>
@@ -18,12 +18,34 @@
         <tbody>
           <tr v-for="car in cars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
-            <td>{{ car.owner }}</td>
+            <td>{{ car.owner ? car.owner.text : "" }}</td>
             <td>{{ car.carType }}</td>
             <td>{{ car.year }}</td>
             <td>{{ car.cm3 }}</td>
             <td>{{ car.fuelType }}</td>
-            <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="editCar(car)">Edit</button></td>
+            <td><button class="btn btn-primary" @click="editCar(car)">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table v-if="!admin" class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th>License number</th>
+            <th>Car type</th>
+            <th>Year</th>
+            <th>Cm3</th>
+            <th>Fuel type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="car in cars" :key="car.id">
+            <td>{{ car.licenseNumber }}</td>
+            <td>{{ car.carType }}</td>
+            <td>{{ car.year }}</td>
+            <td>{{ car.cm3 }}</td>
+            <td>{{ car.fuelType }}</td>
+            <td><button class="btn btn-primary">Claim</button></td>
           </tr>
         </tbody>
       </table>
@@ -35,7 +57,7 @@
 <script>
 import CarModal from "@/components/CarModal.vue";
 import NavBar from "@/components/NavBar.vue"
-import { mapState, mapMutations } from "vuex"
+import { mapState, mapActions } from "vuex"
 
 export default {
   data: () => ({
@@ -45,78 +67,16 @@ export default {
     CarModal, NavBar
   },
   computed: {
-    ...mapState(['cars'])
+    ...mapState(['admin', 'cars'])
   },
   mounted() {
-  const cars = [
-      {
-        id: "1",
-        licenseNumber: "ABC - 123",
-        owner: null,
-        carType: "Audi",
-        year: 2018,
-        cm3: 1900,
-        fuelType: "Gasoline"
-      },
-      {
-        id: "2",
-        licenseNumber: "ABC - 321",
-        owner: null,
-        carType: "Audi",
-        year: 2017,
-        cm3: 1800,
-        fuelType: "Gasoline"
-      },
-      {
-        id: "3",
-        licenseNumber: "ABC - 231",
-        owner: null,
-        carType: "BMW",
-        year: 2019,
-        cm3: 1600,
-        fuelType: "Diesel"
-      },
-      {
-        id: "4",
-        licenseNumber: "ABC - 456",
-        owner: null,
-        carType: "BMW",
-        year: 2019,
-        cm3: 1600,
-        fuelType: "Diesel"
-      },
-      {
-        id: "5",
-        licenseNumber: "ABC - 789",
-        owner: null,
-        carType: "Fiat",
-        year: 2010,
-        cm3: 1200,
-        fuelType: "Gasoline"
-      },
-      {
-        id: "6",
-        licenseNumber: "ABC - 654",
-        owner: null,
-        carType: "Fiat",
-        year: 2013,
-        cm3: 1100,
-        fuelType: "Diesel"
-      },
-      {
-        id: "7",
-        licenseNumber: "ABC - 987",
-        owner: null,
-        carType: "Porsche",
-        year: 2016,
-        cm3: 3000,
-        fuelType: "Gasoline"
-      },
-    ];
-    this.setCars(cars);
+    this.loadCars();
+    this.loadCarTypes();
+    this.loadFuelTypes();
+    this.loadUsers();
   },
   methods: {
-    ...mapMutations(['setCars']),
+    ...mapActions(['loadCars', 'loadCarTypes', 'loadFuelTypes', 'loadUsers']),
     editCar(car) {
       this.selectedCar = car;
       this.$bvModal.show("carModal");
@@ -124,7 +84,10 @@ export default {
     addNewCar() {
       this.selectedCar = null;
       this.$bvModal.show("carModal");
-    } 
+    },
+    ownerOf(car) {
+      return car.owner ? car.owner.firstName + " " + car.owner.lastName : "";
+    }
   }
 }
 </script>

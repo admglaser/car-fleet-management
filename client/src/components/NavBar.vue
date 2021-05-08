@@ -1,12 +1,12 @@
 <template>
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar toggleable="lg" variant="primary">
       <div class="container">
-        <b-navbar-brand>
+        <div>
           <router-link to="/">
             <img class="logo" src="@/assets/logo.svg">
-            <span class="title">Car Fleet Management</span>
           </router-link>
-        </b-navbar-brand>
+          <span class="title">Car Fleet Management</span>
+        </div>
        
 
         <b-dropdown variant="link" right text="Right align" no-caret>
@@ -32,6 +32,7 @@ export default {
     logout() {
       deleteCookie("auth");
       deleteCookie("name");
+      deleteCookie("admin");
       this.$store.commit("setToken", null);
       this.$store.commit("setName", null);
       this.$router.push({ name: 'Login' });
