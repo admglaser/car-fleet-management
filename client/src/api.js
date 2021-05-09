@@ -1,9 +1,19 @@
 import _axios from "axios";
 
 export function Api({ axios = _axios, token } = {}) {
-  const { get, post, put } = axios.create({
+  const client = axios.create({
     headers: { Authorization: "Bearer " + token },
   });
+  client.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      throw new Error(
+        `${err.response.status} ${err.response.statusText} - ${err.response.data}`
+      );
+    }
+  );
+  const { get, post, put } = client;
+
   async function getCars() {
     const { data } = await get("/api/cars");
     return data;

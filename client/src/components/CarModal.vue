@@ -24,9 +24,14 @@
         </b-form-group>
       </div>
     </div>
+    <div v-if="errorMessage"> {{ errorMessage }} </div>
     <template #modal-footer>
-      <button class="btn btn-primary" @click="ok()">{{ okButtonCaption }}</button>
-      <button class="btn btn-secondary" @click="cancel()">Cancel</button>
+     
+      <button class="btn btn-primary" @click="save()">
+        {{ okButtonCaption }}
+        <b-spinner v-if="loading" small></b-spinner>
+      </button>
+      <button class="btn btn-secondary" @click="hide()">Cancel</button>
     </template>
   </b-modal>
 </template>
@@ -43,6 +48,8 @@ export default {
     year: null,
     cm3: null,
     fuelType: null,
+    errorMessage: null,
+    loading: false,
   }),
   props: {
     id: { type: String, required: true },
@@ -64,6 +71,7 @@ export default {
     ...mapActions(["addCar", "updateCar"]),
     async resetModal() {
       await this.$nextTick();
+      this.errorMessage = null;
       if (this.selectedCar) {
         this.licenseNumber = this.selectedCar.licenseNumber;
         this.owner = this.selectedCar.owner ? this.users.find(user => user.id === this.selectedCar.owner.id) : null;
@@ -80,31 +88,41 @@ export default {
         this.fuelType = null;
       }
     },
-    async ok() {
-      if (this.selectedCar) {
-        await this.updateCar({
-          id: this.selectedCar.id,
-          licenseNumber: this.licenseNumber,  
-          owner: this.owner, 
-          carType: this.carType,
-          year: parseInt(this.year),  
-          cm3: parseInt(this.cm3),  
-          fuelType: this.fuelType
-        })
-      } else {
-        await this.addCar({ 
-          licenseNumber: this.licenseNumber,  
-          owner: this.owner, 
-          carType: this.carType,
-          year: parseInt(this.year),  
-          cm3: parseInt(this.cm3),  
-          fuelType: this.fuelType
-        });
+    async save() {
+      try {
+        this.loading = true;
+        if (!/^([A-Z]{3}[-]{0,1}[1-9]{3})$/.test(this.licenseNumber)) {
+          throw new Error("License number has invalid format!");
+        }
+        if (this.selectedCar) {
+          await this.updateCar({
+            id: this.selectedCar.id,
+            licenseNumber: this.licenseNumber,  
+            owner: this.owner, 
+            carType: this.carType,
+            year: parseInt(this.year),  
+            cm3: parseInt(this.cm3),  
+            fuelType: this.fuelType
+          })
+        } else {
+          await this.addCar({ 
+            licenseNumber: this.licenseNumber,  
+            owner: this.owner, 
+            carType: this.carType,
+            year: parseInt(this.year),  
+            cm3: parseInt(this.cm3),  
+            fuelType: this.fuelType
+          });
+        }
+        this.hide();
+      } catch (err) {
+        this.errorMessage = err.message;
+      } finally {
+        this.loading = false;
       }
-      this.$bvModal.hide(this.id);
     },
-    cancel() {
-      this.$bvModal.hide(this.id);
+    hide() {
+       this.$bvModal.hide(this.id);
     }
   }
 }
