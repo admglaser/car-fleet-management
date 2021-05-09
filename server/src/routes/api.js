@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const jwtMiddleware = require("../middlewares/jwtMiddleware");
-const validateCar = require("../validators");
+const { validateCar } = require("../validators");
 
 function Api({ carDao, carTypeDao, fuelTypeDao, userDao }) {
   const router = express.Router();
@@ -42,11 +42,14 @@ function Api({ carDao, carTypeDao, fuelTypeDao, userDao }) {
     }
     const car = req.body;
     try {
-      validateCar(car);
+      const users = await userDao.getUsers();
+      const carTypes = await carTypeDao.getCarTypes();
+      const fuelTypes = await fuelTypeDao.getFuelTypes();
+      validateCar(car, users, carTypes, fuelTypes);
       const data = await carDao.addCar(car);
       res.json({ ...car, id: data.id });
     } catch (err) {
-      res.send(400, err);
+      res.status(400).send(err.message);
     }
   });
 

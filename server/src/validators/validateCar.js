@@ -26,7 +26,7 @@ function validateCar(
       throw new Error("Unknown owner!");
     }
   }
-  if (carType && !carTypes.find((ct) => ct.name === carType)) {
+  if (carType && !carTypes.includes(carType)) {
     throw new Error("Unknown car type!");
   }
   if (year && typeof year !== "number") {
@@ -35,7 +35,7 @@ function validateCar(
   if (cm3 && typeof cm3 !== "number") {
     throw new Error("Cm3 must be a number");
   }
-  if (fuelType && !fuelTypes.find((ft) => ft.name === fuelType)) {
+  if (fuelType && !fuelTypes.includes(fuelType)) {
     throw new Error("Unknown fuel type!");
   }
 }

@@ -54,7 +54,7 @@ describe("validateCar", () => {
   });
 
   it("throws error when carType is unknown", () => {
-    carTypes = [{ name: "Fiat" }, { name: "Porsche" }];
+    carTypes = ["Fiat", "Porsche"];
 
     const car = {
       licenseNumber: "ABC-123",
@@ -88,7 +88,7 @@ describe("validateCar", () => {
   });
 
   it("throws error when fuelType is unknown", () => {
-    fuelTypes = [{ name: "Gasoline" }];
+    fuelTypes = ["Gasoline"];
 
     const car = {
       licenseNumber: "ABC-123",
@@ -110,8 +110,8 @@ describe("validateCar", () => {
       { id: "1", firstName: "firstName1", lastName: "lastName1" },
       { id: "2", firstName: "firstName2", lastName: "lastName2" },
     ];
-    carTypes = [{ name: "Fiat" }, { name: "Porsche" }];
-    fuelTypes = [{ name: "Gasoline" }];
+    carTypes = ["Fiat", "Porsche"];
+    fuelTypes = ["Gasoline"];
 
     const car = {
       licenseNumber: "ABC-123",
