@@ -53,6 +53,24 @@ function Api({ carDao, carTypeDao, fuelTypeDao, userDao }) {
     }
   });
 
+  router.put("/api/cars/:id", async (req, res) => {
+    if (!req.user.admin) {
+      return res.sendStatus(401);
+    }
+    const car = req.body;
+    const id = req.params.id;
+    try {
+      const users = await userDao.getUsers();
+      const carTypes = await carTypeDao.getCarTypes();
+      const fuelTypes = await fuelTypeDao.getFuelTypes();
+      validateCar(car, users, carTypes, fuelTypes);
+      await carDao.updateCar({ ...car, id });
+      res.json({ ...car, id });
+    } catch (err) {
+      res.status(400).send(err.message);
+    }
+  });
+
   return router;
 }
 

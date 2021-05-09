@@ -11,6 +11,28 @@ async function CarDao({ cloudant }) {
       .insert({ licenseNumber, owner, carType, year, cm3, fuelType });
   }
 
+  async function updateCar({
+    id,
+    licenseNumber,
+    owner,
+    carType,
+    year,
+    cm3,
+    fuelType,
+  }) {
+    const existingCar = await cloudant.use(TABLE_NAME).get(id);
+    return cloudant.use(TABLE_NAME).insert({
+      _id: id,
+      _rev: existingCar._rev,
+      licenseNumber,
+      owner,
+      carType,
+      year,
+      cm3,
+      fuelType,
+    });
+  }
+
   async function getCars() {
     const { rows } = await cloudant
       .use(TABLE_NAME)
@@ -28,6 +50,7 @@ async function CarDao({ cloudant }) {
   return {
     addCar,
     getCars,
+    updateCar,
   };
 }
 
