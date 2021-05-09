@@ -2,8 +2,8 @@
   <div>
     <NavBar/>
     <div class="container">
-      <button v-if="admin" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
-      <table v-if="admin" class="table table-sm table-striped">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
+      <table class="table table-sm table-striped">
         <thead>
           <tr>
             <th>License number</th>
@@ -27,28 +27,6 @@
           </tr>
         </tbody>
       </table>
-      <table v-if="!admin" class="table table-sm table-striped">
-        <thead>
-          <tr>
-            <th>License number</th>
-            <th>Car type</th>
-            <th>Year</th>
-            <th>Cm3</th>
-            <th>Fuel type</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="car in sortedCars" :key="car.id">
-            <td>{{ car.licenseNumber }}</td>
-            <td>{{ car.carType }}</td>
-            <td>{{ car.year }}</td>
-            <td>{{ car.cm3 }}</td>
-            <td>{{ car.fuelType }}</td>
-            <td><button class="btn btn-primary">Claim</button></td>
-          </tr>
-        </tbody>
-      </table>
       <CarModal id="carModal" :selectedCar="selectedCar"/>
     </div>
   </div>
@@ -67,7 +45,7 @@ export default {
     CarModal, NavBar
   },
   computed: {
-    ...mapState(['admin', 'cars']),
+    ...mapState(['cars']),
     sortedCars() {
       return this.cars.slice().sort((c1, c2) => (c1.licenseNumber.localeCompare(c2.licenseNumber)));
     }

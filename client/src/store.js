@@ -1,16 +1,21 @@
 function Store({ api }) {
   const state = {
     token: null,
+    userId: null,
     name: null,
     admin: false,
     cars: [],
     users: [],
     carTypes: [],
     fuelTypes: [],
+    claimableCars: [],
   };
   const mutations = {
     setToken: (state, value) => {
       state.token = value;
+    },
+    setUserId: (state, value) => {
+      state.userId = value;
     },
     setName: (state, value) => {
       state.name = value;
@@ -20,6 +25,9 @@ function Store({ api }) {
     },
     setCars: (state, value) => {
       state.cars = value;
+    },
+    setClaimableCars: (state, value) => {
+      state.claimableCars = value;
     },
     setCarTypes: (state, value) => {
       state.carTypes = value;
@@ -49,6 +57,10 @@ function Store({ api }) {
         }
       });
       commit("setCars", cars);
+    },
+    async loadClaimableCars({ commit }) {
+      const cars = await api.getClaimableCars();
+      commit("setClaimableCars", cars);
     },
     async loadCarTypes({ commit }) {
       const carTypes = await api.getCarTypes();

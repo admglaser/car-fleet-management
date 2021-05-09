@@ -31,6 +31,7 @@ export default {
   methods: {
     logout() {
       deleteCookie("auth");
+      deleteCookie("userId");
       deleteCookie("name");
       deleteCookie("admin");
       this.$store.commit("setToken", null);

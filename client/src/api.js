@@ -18,6 +18,10 @@ export function Api({ axios = _axios, token } = {}) {
     const { data } = await get("/api/cars");
     return data;
   }
+  async function getClaimableCars() {
+    const { data } = await get("/api/cars?claimable=true");
+    return data;
+  }
   async function addCar(car) {
     const { data } = await post("/api/cars", car);
     return data;
@@ -41,6 +45,7 @@ export function Api({ axios = _axios, token } = {}) {
 
   return {
     getCars,
+    getClaimableCars,
     addCar,
     updateCar,
     getCarTypes,

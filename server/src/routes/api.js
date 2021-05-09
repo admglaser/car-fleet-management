@@ -30,10 +30,18 @@ function Api({ carDao, carTypeDao, fuelTypeDao, userDao }) {
   });
 
   router.get("/api/cars", async (req, res) => {
-    if (!req.user.admin) {
-      return res.sendStatus(401);
+    if (req.query && req.query.claimable) {
+      const cars = await carDao.getCars();
+      const claimableCars = cars.filter(
+        (car) => !car.owner || car.owner.id === req.user.id
+      );
+      res.json(claimableCars);
+    } else {
+      if (!req.user.admin) {
+        return res.sendStatus(401);
+      }
+      res.json(await carDao.getCars());
     }
-    res.json(await carDao.getCars());
   });
 
   router.post("/api/cars", async (req, res) => {

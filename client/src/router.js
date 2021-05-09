@@ -11,7 +11,7 @@ function Router({ store }) {
     {
       path: "/",
       name: "Home",
-      redirect: { name: "Cars" },
+      redirect: () => ({ name: store.state.admin ? "Cars" : "ClaimCar" }),
       meta: {
         requiresAuth: true,
       },
@@ -21,6 +21,15 @@ function Router({ store }) {
       name: "Cars",
       component: () =>
         import(/* webpackChunkName: "cars" */ "@/views/Cars.vue"),
+      meta: {
+        requiresAdminAuth: true,
+      },
+    },
+    {
+      path: "/claim",
+      name: "ClaimCar",
+      component: () =>
+        import(/* webpackChunkName: "claimCar" */ "@/views/ClaimCar.vue"),
       meta: {
         requiresAuth: true,
       },
@@ -32,7 +41,13 @@ function Router({ store }) {
   });
 
   router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (to.matched.some((record) => record.meta.requiresAdminAuth)) {
+      if (!store.state.admin) {
+        next({ name: "Home" });
+      } else {
+        next();
+      }
+    } else if (to.matched.some((record) => record.meta.requiresAuth)) {
       if (!store.state.token) {
         next({ name: "Login" });
       } else {

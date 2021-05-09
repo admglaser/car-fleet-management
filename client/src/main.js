@@ -19,10 +19,11 @@ if (window.location.hash && window.location.hash == "#_=_") {
   window.location.hash = "";
 }
 
-let token, name, admin;
+let token, userId, name, admin;
 
 if (document.cookie) {
   token = getCookie("auth");
+  userId = getCookie("userId");
   name = getCookie("name");
   admin = getCookie("admin");
 }
@@ -30,6 +31,7 @@ const api = Api({ token });
 
 const store = new Vuex.Store(Store({ api }));
 store.commit("setToken", token);
+store.commit("setUserId", userId);
 store.commit("setName", name);
 store.commit("setAdmin", admin === "true");
 
