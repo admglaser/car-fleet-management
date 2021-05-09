@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "dev": "vue-cli-service build --watch",
     "lint": "vue-cli-service lint",
-    "test": "jest"
+    "test": "npm run lint & jest"
   },
   "dependencies": {
     "axios": "^0.21.1",
