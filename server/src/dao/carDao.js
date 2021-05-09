@@ -39,6 +39,7 @@ async function CarDao({ cloudant }) {
       .list({ include_docs: true });
     return rows.map((row) => ({
       id: row.doc._id,
+      licenseNumber: row.doc.licenseNumber,
       owner: row.doc.owner,
       carType: row.doc.carType,
       year: row.doc.year,

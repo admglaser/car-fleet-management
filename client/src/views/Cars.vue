@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="car in cars" :key="car.id">
+          <tr v-for="car in sortedCars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
             <td>{{ car.owner ? car.owner.text : "" }}</td>
             <td>{{ car.carType }}</td>
@@ -39,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="car in cars" :key="car.id">
+          <tr v-for="car in sortedCars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
             <td>{{ car.carType }}</td>
             <td>{{ car.year }}</td>
@@ -67,7 +67,10 @@ export default {
     CarModal, NavBar
   },
   computed: {
-    ...mapState(['admin', 'cars'])
+    ...mapState(['admin', 'cars']),
+    sortedCars() {
+      return this.cars.sort((c1, c2) => (c1.licenseNumber.localeCompare(c2.licenseNumber)));
+    }
   },
   mounted() {
     this.loadCars();
