@@ -2,7 +2,7 @@
   <div>
     <NavBar/>
     <div class="container">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
+      <button ref="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carModal" @click="addNewCar">Add new Car</button>
       <table class="table table-sm table-striped">
         <thead>
           <tr>
@@ -16,18 +16,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="car in sortedCars" :key="car.id">
+          <tr ref="carRow" v-for="car in sortedCars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
             <td>{{ ownerOf(car) }}</td>
             <td>{{ car.carType }}</td>
             <td>{{ car.year }}</td>
             <td>{{ car.cm3 }}</td>
             <td>{{ car.fuelType }}</td>
-            <td><button class="btn btn-primary" @click="editCar(car)">Edit</button></td>
+            <td><button ref="editButton" class="btn btn-primary" @click="editCar(car)">Edit</button></td>
           </tr>
         </tbody>
       </table>
-      <CarModal id="carModal" :selectedCar="selectedCar"/>
+      <CarModal ref="modal" id="carModal" :selectedCar="selectedCar"/>
     </div>
   </div>
 </template>
