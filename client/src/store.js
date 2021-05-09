@@ -49,13 +49,18 @@ function Store({ api }) {
       const cars = state.cars.filter((c) => c.id !== car.id);
       commit("setCars", [...cars, updatedCar]);
     },
+    async claimCar({ state, commit }, car) {
+      const updatedCar = await api.claimCar(car);
+      const cars = state.claimableCars.filter((c) => c.id !== car.id);
+      commit("setClaimableCars", [...cars, updatedCar]);
+    },
+    async revokeCar({ state, commit }, car) {
+      const updatedCar = await api.revokeCar(car);
+      const cars = state.claimableCars.filter((c) => c.id !== car.id);
+      commit("setClaimableCars", [...cars, updatedCar]);
+    },
     async loadCars({ commit }) {
       const cars = await api.getCars();
-      cars.forEach((car) => {
-        if (car.owner) {
-          car.owner.text = car.owner.firstName + " " + car.owner.lastName;
-        }
-      });
       commit("setCars", cars);
     },
     async loadClaimableCars({ commit }) {

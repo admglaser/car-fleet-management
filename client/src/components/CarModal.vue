@@ -64,7 +64,7 @@ export default {
       return this.selectedCar ? "Save" : "Add";
     },
     userOptions() {
-      return this.users.map(user => ({value: user, text: user.text}));
+      return this.users.map(user => ({ value: user, text: user.firstName + " " + user.lastName }));
     }
   },
   methods: {

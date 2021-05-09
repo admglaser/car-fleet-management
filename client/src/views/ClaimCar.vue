@@ -6,6 +6,7 @@
         <thead>
           <tr>
             <th>License number</th>
+            <th>Owner</th>
             <th>Car type</th>
             <th>Year</th>
             <th>Cm3</th>
@@ -16,11 +17,15 @@
         <tbody>
           <tr v-for="car in sortedCars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
+            <td>{{ ownerOf(car) }}</td>
             <td>{{ car.carType }}</td>
             <td>{{ car.year }}</td>
             <td>{{ car.cm3 }}</td>
             <td>{{ car.fuelType }}</td>
-            <td><button class="btn btn-primary" :disabled="!claimed(car) && hasClaimed">{{ claimed(car) ? "Revoke" : "Claim"}}</button></td>
+            <td>
+              <button v-if="!claimed(car)" @click="claim(car)" class="btn btn-primary" :disabled="hasClaimed">Claim</button>
+              <button v-if="claimed(car)" @click="revoke(car)" class="btn btn-primary">Revoke</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -49,9 +54,18 @@ export default {
     this.loadClaimableCars();
   },
   methods: {
-    ...mapActions(["loadClaimableCars"]),
+    ...mapActions(["loadClaimableCars", "claimCar", "revokeCar"]),
     claimed(car) {
       return car.owner && car.owner.id === this.userId;
+    },
+    ownerOf(car) {
+      return car.owner ? car.owner.firstName + " " + car.owner.lastName : "";
+    },
+    claim(car) {
+      this.claimCar(car);
+    },
+    revoke(car) {
+      this.revokeCar(car);
     }
   }
 }

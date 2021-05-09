@@ -18,7 +18,7 @@
         <tbody>
           <tr v-for="car in sortedCars" :key="car.id">
             <td>{{ car.licenseNumber }}</td>
-            <td>{{ car.owner ? car.owner.text : "" }}</td>
+            <td>{{ ownerOf(car) }}</td>
             <td>{{ car.carType }}</td>
             <td>{{ car.year }}</td>
             <td>{{ car.cm3 }}</td>

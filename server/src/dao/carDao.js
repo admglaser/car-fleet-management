@@ -6,9 +6,20 @@ async function CarDao({ cloudant }) {
   } catch (err) {}
 
   function addCar({ licenseNumber, owner, carType, year, cm3, fuelType }) {
-    return cloudant
-      .use(TABLE_NAME)
-      .insert({ licenseNumber, owner, carType, year, cm3, fuelType });
+    return cloudant.use(TABLE_NAME).insert({
+      licenseNumber,
+      owner: owner
+        ? {
+            id: owner.id,
+            firstName: owner.firstName,
+            lastName: owner.lastName,
+          }
+        : null,
+      carType,
+      year,
+      cm3,
+      fuelType,
+    });
   }
 
   async function updateCar({
@@ -25,7 +36,13 @@ async function CarDao({ cloudant }) {
       _id: id,
       _rev: existingCar._rev,
       licenseNumber,
-      owner,
+      owner: owner
+        ? {
+            id: owner.id,
+            firstName: owner.firstName,
+            lastName: owner.lastName,
+          }
+        : null,
       carType,
       year,
       cm3,
