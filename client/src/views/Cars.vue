@@ -69,7 +69,7 @@ export default {
   computed: {
     ...mapState(['admin', 'cars']),
     sortedCars() {
-      return this.cars.sort((c1, c2) => (c1.licenseNumber.localeCompare(c2.licenseNumber)));
+      return this.cars.slice().sort((c1, c2) => (c1.licenseNumber.localeCompare(c2.licenseNumber)));
     }
   },
   mounted() {
